@@ -10,7 +10,14 @@ export default function ParentDashboard() {
 
   useEffect(() => {
     api.get("/dashboard/parent/overview")
-      .then(({ data: d }) => setData(d))
+      .then(({ data: d }) => {
+        console.log("Dashboard data received:", d);
+        setData(d);
+      })
+      .catch((error) => {
+        console.error("Dashboard load error:", error);
+        console.error("Error details:", error.response?.data, error.response?.status);
+      })
       .finally(() => setLoading(false));
   }, []);
 

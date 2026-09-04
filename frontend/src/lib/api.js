@@ -3,10 +3,31 @@ import axios from "axios";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "";
 export const API = BACKEND_URL ? `${BACKEND_URL}/api` : "/api";
 
+console.log("API Configuration:");
+console.log("BACKEND_URL:", BACKEND_URL);
+console.log("API:", API);
+
 export const api = axios.create({
   baseURL: API,
   withCredentials: true,
 });
+
+// Add debugging for API calls
+api.interceptors.request.use(request => {
+  console.log('API Request:', request.method?.toUpperCase(), request.baseURL + request.url);
+  return request;
+});
+
+api.interceptors.response.use(
+  response => {
+    console.log('API Response:', response.status, response.config.url);
+    return response;
+  },
+  error => {
+    console.error('API Error:', error.response?.status, error.config?.url, error.message);
+    return Promise.reject(error);
+  }
+);
 
 export function formatApiErrorDetail(detail) {
   if (detail == null) return "Something went wrong. Please try again.";
