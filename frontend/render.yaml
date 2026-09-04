@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: foundation-academy-frontend
+    env: static
+    buildCommand: npm install && npm run build
+    publishPath: dist
+    envVars:
+      - key: VITE_BACKEND_URL
+        value: https://school-management-system-0nfa.onrender.com
+      - key: VITE_STRIPE_PUBLISHABLE_KEY
+        value: 

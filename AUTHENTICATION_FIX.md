@@ -40,6 +40,8 @@ Updated `frontend/.env` to point to the correct backend URL:
 VITE_BACKEND_URL=https://school-management-system-0nfa.onrender.com
 ```
 
+**CRITICAL**: Also created `frontend/render.yaml` to ensure the production frontend uses the correct backend URL.
+
 ### 2. Backend Environment Variables Setup
 
 Created comprehensive setup guide in `RENDER_SETUP.md` with required environment variables:
@@ -100,8 +102,22 @@ Keep these settings:
 ## Files Modified
 
 1. **frontend/.env** - Updated backend URL for production
-2. **RENDER_SETUP.md** - Created comprehensive deployment guide
-3. **AUTHENTICATION_FIX.md** - This documentation file
+2. **frontend/render.yaml** - Created Render deployment configuration for frontend
+3. **RENDER_SETUP.md** - Created comprehensive deployment guide
+4. **AUTHENTICATION_FIX.md** - This documentation file
+
+## Additional Issue: 404 Error After Authentication Fix
+
+After fixing the authentication 401 error, users may encounter a 404 error when accessing dashboard endpoints. This is caused by:
+
+### Root Cause
+- Frontend was configured to use `localhost:8000` instead of the production backend URL
+- API requests were being sent to `http://localhost:8000/api/dashboard/...` instead of `https://school-management-system-0nfa.onrender.com/api/dashboard/...`
+
+### Solution
+1. Updated `frontend/.env` to use the production backend URL
+2. Created `frontend/render.yaml` to ensure production builds use the correct backend URL
+3. Redeploy frontend to apply the changes
 
 ## Testing the Fix
 
